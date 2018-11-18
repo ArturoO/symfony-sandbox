@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -13,12 +14,29 @@ use App\Entity\Product;
 
 class ProductController extends AbstractController
 {
+
+    /**
+     * @Route("/products/", name="products")
+     */
+    public function products()
+    {
+        $products = $this->getDoctrine()
+			->getRepository(Product::class)
+			->findAll();
+		
+		return $this->render('product/list.html.twig', [
+			'title' => 'Products list',
+            'products' => $products,
+        ]);
+    }
+
+
     /**
      * @Route("/product/{id}", name="product", requirements={"id"="[\d]+"})
      */
     public function index($id)
     {
-
+		
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
             ->find($id);
@@ -39,11 +57,11 @@ class ProductController extends AbstractController
     public function new(Request $request)
     {
         $product = new Product('', 0, '');
-
+		
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
-            ->add('description', TextType::class)
+            ->add('description', TextareaType::class)
             ->add('save', SubmitType::class, array('label' => 'Create a product'))
             ->getForm();
 
@@ -86,7 +104,7 @@ class ProductController extends AbstractController
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
-            ->add('description', TextType::class)
+            ->add('description', TextareaType::class)
             ->add('save', SubmitType::class, array('label' => 'Update product'))
             ->getForm();
 
