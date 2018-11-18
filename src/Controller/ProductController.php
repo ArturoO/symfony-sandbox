@@ -52,9 +52,9 @@ class ProductController extends AbstractController
 
 
     /**
-     * @Route("/product/new/", name="product_new")
+     * @Route("/product/add/", name="product_add")
      */
-    public function new(Request $request)
+    public function add(Request $request)
     {
         $product = new Product('', 0, '');
 		
@@ -76,7 +76,7 @@ class ProductController extends AbstractController
         }
         
 
-        return $this->render('product/new.html.twig', array(
+        return $this->render('product/add.html.twig', array(
             'title' => 'Create new product',
             'form' => $form->createView(),
         ));

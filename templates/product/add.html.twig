@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}{{ title }}!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,8 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-   
-
-    <p>Product by name: {{ name }} and price: {{ price }} has been added! (ID: {{ id }}) </p>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 </div>
 {% endblock %}
