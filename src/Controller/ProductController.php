@@ -76,6 +76,48 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/product/edit/{id}", name="product_edit", requirements={"id"="[\d]+"})
+     */
+    public function edit(Request $request, int $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)->find($id);
+
+        $form = $this->createFormBuilder($product)
+            ->add('name', TextType::class)
+            ->add('price', IntegerType::class)
+            ->add('description', TextType::class)
+            ->add('save', SubmitType::class, array('label' => 'Update product'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em->flush();
+
+            return $this->redirectToRoute('product_updated');
+        }
+        
+
+        return $this->render('product/edit.html.twig', array(
+            'title' => 'Update product',
+            'form' => $form->createView(),
+        ));
+
+    }
+
+    /**
+     * @Route("/product/updated/", name="product_updated")
+     */
+    public function updated(Request $request)
+    {
+        return $this->render('product/updated.html.twig', array(
+            'title' => 'Product has been updated',            
+        ));
+    }
+
+    /**
      * @Route("/product/add/{name}/{price}", name="add_product", requirements={"name"="[\w-]+","price"="[\d]+"})
      */
     public function addProduct($name, $price)
