@@ -9,6 +9,15 @@
 </style>
 
 <div class="example-wrapper">
+	
+	<div class="flash-wrapper">
+		{% for message in app.flashes('notice') %}
+			<div class="flash-notice">
+				{{ message }}
+			</div>
+		{% endfor %}
+	</div>
+	
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}

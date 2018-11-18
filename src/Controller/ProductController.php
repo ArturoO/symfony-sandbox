@@ -71,8 +71,13 @@ class ProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
+			
+			$this->addFlash(
+				'notice',
+				'Product has been created!'
+			);
 
-            return $this->redirectToRoute('product_created');
+            return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
         }
         
 
@@ -81,16 +86,6 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ));
 
-    }
-
-    /**
-     * @Route("/product/created/", name="product_created")
-     */
-    public function created(Request $request)
-    {
-        return $this->render('product/created.html.twig', array(
-            'title' => 'Product has been created',            
-        ));
     }
 
     /**
@@ -114,7 +109,10 @@ class ProductController extends AbstractController
             
             $em->flush();
 
-            return $this->redirectToRoute('product_updated');
+			$this->addFlash(
+				'notice',
+				'Product has been updated!'
+			);
         }
         
 
