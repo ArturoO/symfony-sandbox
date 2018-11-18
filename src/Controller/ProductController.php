@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Product;
 
@@ -26,6 +30,49 @@ class ProductController extends AbstractController
             'controller_name' => 'ProductController',
             'product' => $product,
         ]);
+    }
+
+
+    /**
+     * @Route("/product/new/", name="product_new")
+     */
+    public function new(Request $request)
+    {
+        $product = new Product('', 0, '');
+
+        $form = $this->createFormBuilder($product)
+            ->add('name', TextType::class)
+            ->add('price', IntegerType::class)
+            ->add('description', TextType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create a product'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_created');
+        }
+        
+
+        return $this->render('product/new.html.twig', array(
+            'title' => 'Create new product',
+            'form' => $form->createView(),
+        ));
+
+    }
+
+    /**
+     * @Route("/product/created/", name="product_created")
+     */
+    public function created(Request $request)
+    {
+        return $this->render('product/created.html.twig', array(
+            'title' => 'Product has been created',            
+        ));
     }
 
     /**

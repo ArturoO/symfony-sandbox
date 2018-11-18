@@ -72,7 +72,7 @@ class Product
         return $this;
     }
 
-    public function __construct(string $name='', int $price=null, string $description )
+    public function __construct(string $name='', int $price=null, string $description)
     {
         $this->setName($name);
         $this->setPrice($price);
