@@ -19,8 +19,8 @@ class ProductController extends AbstractController
             ->getRepository(Product::class)
             ->find($id);
 
-        dump($product);
-        die;
+        // dump($product);
+        // die;
 
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
