@@ -128,7 +128,17 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, int $id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)->find($id);
+        $em->remove($product);
+        $em->flush();
         
+        $this->addFlash(
+            'notice',
+            'Product has been deleted!'
+        );
+        
+        return $this->redirectToRoute('products');
     }
 
 }

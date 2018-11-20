@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block body %}
+
+<div class="notice-wrapper">
+	{% for message in app.flashes('notice') %}
+	<div class="alert alert-info">
+		{{ message }}
+	</div>
+	{% endfor %}
+</div>
+
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -16,15 +25,15 @@
 			</tr>
 		</thead>
 		<tbody>
-		    {% for product in products %}
+			{% for product in products %}
 			<tr>
 				<td>{{ product.id }}</td>
 				<td><a href="{{ path('product', {'id': product.id}) }}">{{ product.name }}</a></td>
 				<td>{{ product.price }}</td>
-				<td>
-					<a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary">Edit</a>
-					<a href="{{ path('product_delete', {'id': product.id}) }}" class="btn btn-danger">Delete</a>
-				</td>
+				<td><a href="{{ path('product_edit', {'id': product.id}) }}"
+					class="btn btn-primary">Edit</a> <a
+					href="{{ path('product_delete', {'id': product.id}) }}"
+					class="btn btn-danger">Delete</a></td>
 			</tr>
 			{% endfor %}
 		</tbody>
