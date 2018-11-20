@@ -122,5 +122,13 @@ class ProductController extends AbstractController
         ));
 
     }
+    
+    /**
+     * @Route("/product/delete/{id}", name="product_delete", requirements={"id"="[\d]+"})
+     */
+    public function delete(Request $request, int $id)
+    {
+        
+    }
 
 }
