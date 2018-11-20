@@ -28,8 +28,9 @@ class Category
      */
     private $products;
 
-    public function __construct()
+    public function __construct(string $name=null)
     {
+        $this->setName($name);
         $this->products = new ArrayCollection();
     }
 

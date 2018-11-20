@@ -40,7 +40,10 @@
 {% endblock %}
 
 {% block sidebar %}
-	
+	<h3>Create category</h3>
+	{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}
 
 
