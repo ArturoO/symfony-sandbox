@@ -19,6 +19,8 @@
         <li>Description: {{ product.description }}</li>
     </ul>
     
+    <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary">Edit</a>
+    <a href="{{ path('products') }}" class="btn btn-primary">All products</a>
 
 </div>
 {% endblock %}

@@ -118,6 +118,7 @@ class ProductController extends AbstractController
 
         return $this->render('product/edit.html.twig', array(
             'title' => 'Update product',
+            'id' => $product->getId(),
             'form' => $form->createView(),
         ));
 
