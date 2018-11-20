@@ -21,6 +21,7 @@
 				<th>#</th>
 				<th>Title</th>
 				<th>Price</th>
+				<th>Category</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -30,6 +31,7 @@
 				<td>{{ product.id }}</td>
 				<td><a href="{{ path('product', {'id': product.id}) }}">{{ product.name }}</a></td>
 				<td>{{ product.price }}</td>
+				<td>{{ product.getCategory().getName() }}</td>
 				<td><a href="{{ path('product_edit', {'id': product.id}) }}"
 					class="btn btn-primary">Edit</a> <a
 					href="{{ path('product_delete', {'id': product.id}) }}"

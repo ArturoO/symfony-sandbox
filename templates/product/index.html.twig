@@ -17,6 +17,7 @@
         <li>Name: {{ product.name }}</li>
         <li>Price: {{ product.price }}</li>
         <li>Description: {{ product.description }}</li>
+        <li>Category: {{ product.getCategory().getName() }}</li>
     </ul>
     
     <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary">Edit</a>
