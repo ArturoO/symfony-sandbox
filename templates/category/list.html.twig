@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+<div class="notice-wrapper">
+	{% for message in app.flashes('notice') %}
+	<div class="alert alert-info">
+		{{ message }}
+	</div>
+	{% endfor %}
+</div>
+
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Title</th>				
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categories %}
+			<tr>
+				<td>{{ category.id }}</td>
+				<td>{{ category.name }}</td>
+				<td>
+					<a href=""class="btn btn-primary">Edit</a>
+					<a href="" class="btn btn-danger">Delete</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+	
+{% endblock %}
+
+
+
+
+
