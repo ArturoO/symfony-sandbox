@@ -123,14 +123,4 @@ class ProductController extends AbstractController
 
     }
 
-    /**
-     * @Route("/product/updated/", name="product_updated")
-     */
-    public function updated(Request $request)
-    {
-        return $this->render('product/updated.html.twig', array(
-            'title' => 'Product has been updated',            
-        ));
-    }
-
 }
