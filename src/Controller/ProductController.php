@@ -8,9 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Product;
+use App\Entity\Category;
+
 
 class ProductController extends AbstractController
 {
@@ -56,18 +59,31 @@ class ProductController extends AbstractController
      */
     public function add(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository(Category::class)->findAll();
+        $categoriesChoices = [];
+        if($categories)
+        {
+            foreach($categories as $category)
+                $categoriesChoices[$category->getName()] = $category;
+        }
+        
         $product = new Product('', 0, '');
 		
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
             ->add('description', TextareaType::class)
+            ->add('category', ChoiceType::class, [
+                'choices' => $categoriesChoices
+            ])
             ->add('save', SubmitType::class, array('label' => 'Create a product'))
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
