@@ -60,6 +60,8 @@ class ProductController extends AbstractController
     public function add(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $product = new Product('', 0, '');
+        
         $categories = $em->getRepository(Category::class)->findAll();
         $categoriesChoices = [];
         if($categories)
@@ -67,16 +69,12 @@ class ProductController extends AbstractController
             foreach($categories as $category)
                 $categoriesChoices[$category->getName()] = $category;
         }
-        
-        $product = new Product('', 0, '');
 		
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
             ->add('description', TextareaType::class)
-            ->add('category', ChoiceType::class, [
-                'choices' => $categoriesChoices
-            ])
+            ->add('category', ChoiceType::class, [ 'choices' => $categoriesChoices])
             ->add('save', SubmitType::class, array('label' => 'Create a product'))
             ->getForm();
 
@@ -111,11 +109,20 @@ class ProductController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Product::class)->find($id);
+        
+        $categories = $em->getRepository(Category::class)->findAll();
+        $categoriesChoices = [];
+        if($categories)
+        {
+            foreach($categories as $category)
+                $categoriesChoices[$category->getName()] = $category;
+        }
 
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
             ->add('description', TextareaType::class)
+            ->add('category', ChoiceType::class, [ 'choices' => $categoriesChoices])
             ->add('save', SubmitType::class, array('label' => 'Update product'))
             ->getForm();
 
