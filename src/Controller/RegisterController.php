@@ -65,7 +65,7 @@ class RegisterController extends AbstractController
 
     /**
      *
-     * @Route("/register-success", name="register_success")
+     * @Route("/register/success", name="register_success")
      */
     function success()
     {
