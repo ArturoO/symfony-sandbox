@@ -22,8 +22,7 @@ class RegisterController extends AbstractController
     public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $users = $entityManager->getRepository(User::class)->findAll();
-        $usersCount = count($users);
+        $usersCount = $entityManager->getRepository(User::class)->countAll();
         
         $user = new User();
 
