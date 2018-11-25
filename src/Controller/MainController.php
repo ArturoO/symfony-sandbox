@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+
+class MainController extends AbstractController
+{
+    /**
+     * @Route("/main", name="main")
+     */
+    public function index()
+    {
+        $title = 'Homepage';
+        $content = 'Homepage content';
+        
+        return $this->render('main/index.html.twig', [
+            'title' => $title,
+            'content' => $content,
+        ]);
+    }
+}
