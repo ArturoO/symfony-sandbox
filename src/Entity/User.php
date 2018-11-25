@@ -32,6 +32,13 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+    
+    /**
+     * @var string The plain password
+     * @Assert\NotBlank
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     public function getId(): ?int
     {
@@ -91,6 +98,18 @@ class User implements UserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+    
+    public function getPlainPassword(): string
+    {
+        return (string) $this->plainPassword;
+    }
+    
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+        
         return $this;
     }
 
