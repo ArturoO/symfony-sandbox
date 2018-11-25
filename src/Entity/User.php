@@ -35,10 +35,14 @@ class User implements UserInterface
     
     /**
      * @var string The plain password
-     * @Assert\NotBlank
-     * @Assert\Length(max=4096)
      */
     private $plainPassword;
+    
+    public function __construct()
+    {
+        $this->roles[] = 'ROLE_USER';
+    }
+    
 
     public function getId(): ?int
     {
@@ -73,9 +77,7 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
+         
         return array_unique($roles);
     }
 
