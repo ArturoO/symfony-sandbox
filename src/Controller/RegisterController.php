@@ -21,8 +21,13 @@ class RegisterController extends AbstractController
      */
     public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $users = $entityManager->getRepository(User::class)->findAll();
+        $usersCount = count($users);
+        
         $user = new User();
 
+        // 1) Build Form 
         $form = $this->createFormBuilder($user)
             ->add('email', EmailType::class)            
             ->add('plainPassword', RepeatedType::class, [
@@ -36,22 +41,24 @@ class RegisterController extends AbstractController
             ])
             ->add('save', SubmitType::class, array('label' => 'Register'))
             ->getForm();
-
+    
+        // 2) Handle request
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            
+            //first registered user will become admin
+            if(!$usersCount)
+                $user->setRoles(['ROLE_ADMIN']);
 
             // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
+            //$entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
-
+           
             return $this->redirectToRoute('register_success');
         }
 
