@@ -19,8 +19,10 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Title</th>				
+				<th>Title</th>
+				{% if is_granted('ROLE_ADMIN') %}
 				<th>Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -28,10 +30,12 @@
 			<tr>
 				<td>{{ category.id }}</td>
 				<td>{{ category.name }}</td>
+				{% if is_granted('ROLE_ADMIN') %}
 				<td>
 					<a href=""class="btn btn-primary">Edit</a>
 					<a href="" class="btn btn-danger">Delete</a>
 				</td>
+				{% endif %}
 			</tr>
 			{% endfor %}
 		</tbody>
@@ -40,10 +44,12 @@
 {% endblock %}
 
 {% block sidebar %}
+    {% if is_granted('ROLE_ADMIN') %}
 	<h3>Create category</h3>
 	{{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
+    {% endif %}
 {% endblock %}
 
 

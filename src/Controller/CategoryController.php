@@ -29,6 +29,8 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            
             $em->persist($category);
             $em->flush();
             
@@ -37,6 +39,7 @@ class CategoryController extends AbstractController
                 'Category has been created!'
             );
         }
+        
         
         $categories = $em->getRepository(Category::class)->findAll();
         
