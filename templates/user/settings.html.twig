@@ -6,7 +6,71 @@
 
 {% block body %}
 
+<div class="flash-wrapper">
+	{% for message in app.flashes('notice') %}
+		<div class="flash-notice">
+			{{ message }}
+		</div>
+	{% endfor %}
+</div>
 
+{{ form_start(form) }}
+	<div class="form-row">
+        <div class="form-group col-md-12">
+          {{ form_errors(form) }}
+        </div>
+	</div>
+	
+	<div class="form-group">
+		<label>{{ form_label(form.id) }}</label>            
+        {{ form_widget(form.id, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.id) }}
+        {{ form_help(form.id) }}
+   	</div>
+   	
+   	<div class="form-group">
+		<label>{{ form_label(form.email) }}</label>            
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.email) }}
+        {{ form_help(form.email) }}
+   	</div>
+   	
+   	<div class="form-group">
+		<label>{{ form_label(form.firstName) }}</label>            
+        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.firstName) }}
+        {{ form_help(form.firstName) }}
+   	</div>
+  
+  	<div class="form-group">
+		<label>{{ form_label(form.secondName) }}</label>            
+        {{ form_widget(form.secondName, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.secondName) }}
+        {{ form_help(form.secondName) }}
+   	</div>
+  
+  	<div class="form-group">
+		<label>{{ form_label(form.gender) }}</label>            
+        {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.gender) }}
+        {{ form_help(form.gender) }}
+   	</div>
+   	
+   	<div class="form-group">
+		<label>{{ form_label(form.age) }}</label>            
+        {{ form_widget(form.age, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.age) }}
+        {{ form_help(form.age) }}
+   	</div>
+   	
+   	<div class="form-group">
+		{{ form_label(form.save) }}       
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+   	</div>
+
+{{ form_end(form) }}
+
+{#
 <p><b>Id:</b> {{ app.user.id }}</p>
 <p><b>Email:</b> {{ app.user.email }}</p>
 <p><b>Roles:</b></p>
@@ -20,6 +84,8 @@
     {% endif %}
 	</p>
 {% endfor %}
-</ul>
+
+#}
+
 
 {% endblock %}
