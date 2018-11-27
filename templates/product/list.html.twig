@@ -22,7 +22,9 @@
 				<th>Title</th>
 				<th>Price</th>
 				<th>Category</th>
+				{% if is_granted('ROLE_ADMIN') %}
 				<th>Actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -32,10 +34,12 @@
 				<td><a href="{{ path('product', {'id': product.id}) }}">{{ product.name }}</a></td>
 				<td>{{ product.price }}</td>
 				<td>{{ product.getCategory().getName() }}</td>
+				{% if is_granted('ROLE_ADMIN') %}
 				<td><a href="{{ path('product_edit', {'id': product.id}) }}"
 					class="btn btn-primary">Edit</a> <a
 					href="{{ path('product_delete', {'id': product.id}) }}"
 					class="btn btn-danger">Delete</a></td>
+			    {% endif %}
 			</tr>
 			{% endfor %}
 		</tbody>

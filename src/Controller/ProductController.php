@@ -59,6 +59,8 @@ class ProductController extends AbstractController
      */
     public function add(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $em = $this->getDoctrine()->getManager();
         $product = new Product('', 0, '');
         
@@ -107,6 +109,8 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, int $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Product::class)->find($id);
         
@@ -152,6 +156,8 @@ class ProductController extends AbstractController
      */
     public function delete(Request $request, int $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Product::class)->find($id);
         $em->remove($product);
