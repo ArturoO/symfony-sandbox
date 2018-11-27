@@ -8,13 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/user/settings", name="user_settings")
      */
-    public function index()
+    public function userSettings()
     {
-        return $this->render('user/index.html.twig', [
-            'title' => 'User account',
-            'content' => 'User content',
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        
+//         $user = $this->getUser();
+//         dump($user);
+//         die;
+        
+        return $this->render('user/settings.html.twig', [
+            'title' => 'Settings',
         ]);
     }
 }

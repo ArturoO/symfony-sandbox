@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+
+<p><b>Id:</b> {{ app.user.id }}</p>
+<p><b>Email:</b> {{ app.user.email }}</p>
+<p><b>Roles:</b></p>
+{% for role in app.user.roles %}
+	<p>
+    {% if role=='ROLE_USER'  %}
+    	User
+    {% endif %}
+    {% if role=='ROLE_ADMIN'  %}
+    	Administrator
+    {% endif %}
+	</p>
+{% endfor %}
+</ul>
+
+{% endblock %}
