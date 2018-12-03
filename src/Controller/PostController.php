@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Post;
+use App\Entity\User;
 
 class PostController extends AbstractController
 {
@@ -29,7 +30,7 @@ class PostController extends AbstractController
         {
             foreach($posts as $post)
             {
-                $outputHtml.='ID: ' . $post->getId() . '; Title: ' . $post->getTitle() . '<br>';
+                $outputHtml.='ID: ' . $post->getId() . '; Title: ' . $post->getTitle() . '; User: ' . $post->getUser()->getFirstName() . ' ' . $post->getUser()->getSecondName() . '<br>';
             }
         }
 
@@ -41,12 +42,13 @@ class PostController extends AbstractController
     /**
      * @Route("/post/add/", name="post_add")
      */
-    public function index(Request $request)
+    public function add(Request $request)
     {
         $response = new Response();
 
         $title = $request->request->get('title', '');
         $content = $request->request->get('content', '');
+        $userId = $request->request->get('user_id', 0);
         
         if(!strlen($title))
         {
@@ -54,8 +56,24 @@ class PostController extends AbstractController
             return $response;
         }
         
+        if(!$userId)
+        {
+            $response->setContent('Post must be assigned to a user!');
+            return $response;
+        }
+        
         $em = $this->getDoctrine()->getManager();
+        
+        $user = $em->getRepository(User::class)->find($userId);
+        
+        if(is_null($user))
+        {
+            $response->setContent('User doesn\'t exist.');
+            return $response;
+        }
+                
         $post = new Post($title, $content);
+        $post->setUser($user);
         
         $em->persist($post);
         $em->flush();
