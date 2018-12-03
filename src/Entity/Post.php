@@ -35,6 +35,20 @@ class Post
      * @ORM\Column(type="datetime")
      */
     private $date;
+    
+    public function __construct(string $title, ?string $content = null)
+    {
+        $this->setTitle($title);
+        
+        $slug = preg_replace('/\s+/', '-', strtolower($title));
+        $this->setSlug($slug);
+        
+        $this->setContent($content);
+        
+        $dateTime = new \DateTime();        
+        $this->setDate($dateTime);
+        
+    }
 
     public function getId(): ?int
     {
